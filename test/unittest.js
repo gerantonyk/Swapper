@@ -1,7 +1,8 @@
 const { expect } = require("chai");
-const { ethers } = require("hardhat");
-;
-describe("Swapper", function () {
+const { ethers,network } = require("hardhat");
+
+
+describe("Swapper - unit test", function () {
   let tokenFactory 
   let token1 
   let token2 
@@ -9,12 +10,17 @@ describe("Swapper", function () {
   let swapper 
   let owner 
   let addr1
-  beforeEach(async () => {
+
+  before(async ()=> {
+    await network.provider.request({method: "hardhat_reset"});
     [owner, addr1] = await ethers.getSigners();
     tokenFactory = await ethers.getContractFactory("Token");
+    swapperFactory = await ethers.getContractFactory('Swapper');
+  })
+ 
+  beforeEach(async () => {
     token1 = await tokenFactory.deploy('token1','TK1');
     token2 = await tokenFactory.deploy('token2','TK2');
-    swapperFactory = await ethers.getContractFactory('Swapper');
     swapper = await swapperFactory.deploy(token1.address, token2.address);
   });
   describe('Provide function', function() {

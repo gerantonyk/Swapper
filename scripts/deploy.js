@@ -14,16 +14,16 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract to deploy
-  const ERC20 = await hre.ethers.getContractFactory("Token");
-  const erc20 = await ERC20.deploy('token1','TK1');
-  const erc202 = await ERC20.deploy('token2','TK2');
+  const Token = await hre.ethers.getContractFactory("Token");
+  const token = await Token.deploy('token1','TK1');
+  const token2 = await Token.deploy('token2','TK2');
   const Swapper = await hre.ethers.getContractFactory("Swapper");
-  const swapper = await Swapper.deploy(erc20.address,erc202.address);
+  const swapper = await Swapper.deploy(token.address,token2.address);
 
-  await erc20.deployed();
-  console.log("Token1 deployed to:", erc20.address);
-  await erc202.deployed();
-  console.log("Token2 deployed to:", erc202.address);
+  await token.deployed();
+  console.log("Token1 deployed to:", token.address);
+  await token2.deployed();
+  console.log("Token2 deployed to:", token2.address);
   await swapper.deployed();
   console.log("Swapper deployed to:", swapper.address);
 }
